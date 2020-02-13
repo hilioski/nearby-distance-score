@@ -1,0 +1,34 @@
+{
+    "name": "hilioski/nearby-distance-score",
+    "type": "library",
+    "description": "Calculating different type of distances (walking, driving, etc.) between multiple locations using Google Maps API and Walk Score API",
+    "license": "MIT",
+    "require": {
+        "php": "^7.1.3",
+        "guzzlehttp/guzzle": "^6.5"
+    },
+    "authors": [
+        {
+            "name": "Hristian Ilioski",
+            "email": "hristian.ilioski@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Hilioski\\NearbyDistanceScore\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Hilioski\\NearbyDistanceScore\\Providers\\NearbyDistanceScoreServiceProvider"
+            ]
+        }
+    }
+}

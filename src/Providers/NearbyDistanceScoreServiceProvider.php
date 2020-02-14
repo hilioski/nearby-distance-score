@@ -3,6 +3,7 @@
 namespace Hilioski\NearbyDistanceScore\Providers;
 
 use Hilioski\NearbyDistanceScore\GoogleNearby;
+use Hilioski\NearbyDistanceScore\WalkScore;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
@@ -39,10 +40,15 @@ class NearbyDistanceScoreServiceProvider extends ServiceProvider
             return new GoogleDistance($app['config']['nearby-distance-score.google.api_key']);
         });
 
+        $this->app->singleton('walk-score', function (Container $app) {
+            return new WalkScore($app['config']['nearby-distance-score.walk_score.api_key']);
+        });
+
         $this->app->booting(function () {
             $loader = AliasLoader::getInstance();
             $loader->alias('GoogleNearby', \Hilioski\NearbyDistanceScore\Facades\GoogleNearby::class);
             $loader->alias('GoogleDistance', \Hilioski\NearbyDistanceScore\Facades\GoogleDistance::class);
+            $loader->alias('WalkScore', \Hilioski\NearbyDistanceScore\Facades\WalkScore::class);
         });
     }
 }

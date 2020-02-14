@@ -2,6 +2,7 @@
 
 use Hilioski\NearbyDistanceScore\Facades\GoogleNearby;
 use Hilioski\NearbyDistanceScore\Facades\GoogleDistance;
+use Hilioski\NearbyDistanceScore\Facades\WalkScore;
 
 if (!function_exists('google_nearby')) {
     /**
@@ -35,5 +36,22 @@ if (!function_exists('google_distance')) {
     function google_distance(string $origins, string $destinations, array $optionalParameters = [])
     {
         return GoogleDistance::calculate($origins, $destinations, $optionalParameters);
+    }
+}
+
+if (!function_exists('walk_score')) {
+    /**
+     * @author hilioski
+     *
+     * @param float  $latitude
+     * @param float  $longitude
+     * @param string $address
+     * @param array  $optionalParameters
+     *
+     * @return array
+     */
+    function walk_score(float $latitude, float $longitude, string $address, array $optionalParameters = [])
+    {
+        return WalkScore::getScore($latitude, $longitude, $address, $optionalParameters);
     }
 }

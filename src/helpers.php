@@ -1,8 +1,9 @@
 <?php
 
+use Hilioski\NearbyDistanceScore\Facades\WalkScore;
 use Hilioski\NearbyDistanceScore\Facades\GoogleNearby;
 use Hilioski\NearbyDistanceScore\Facades\GoogleDistance;
-use Hilioski\NearbyDistanceScore\Facades\WalkScore;
+use Hilioski\NearbyDistanceScore\Facades\GoogleGeoCoding;
 
 if (!function_exists('google_nearby')) {
     /**
@@ -38,6 +39,22 @@ if (!function_exists('google_distance')) {
         return GoogleDistance::calculate($origins, $destinations, $optionalParameters);
     }
 }
+
+if (!function_exists('google_geocoding')) {
+    /**
+     * @author hilioski
+     *
+     * @param string $address
+     * @param array  $optionalParameters
+     *
+     * @return array
+     */
+    function geoCodeAddress(string $address, array $optionalParameters = [])
+    {
+        return GoogleGeoCoding::geoCodeAddress($address, $optionalParameters);
+    }
+}
+
 
 if (!function_exists('walk_score')) {
     /**

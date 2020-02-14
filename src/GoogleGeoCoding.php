@@ -4,18 +4,18 @@ namespace Hilioski\NearbyDistanceScore;
 
 use Exception;
 use GuzzleHttp\Client;
-use Hilioski\NearbyDistanceScore\Contracts\GoogleNearbyContract;
+use Hilioski\NearbyDistanceScore\Contracts\GoogleGeoCodingContract;
 
-class GoogleNearby implements GoogleNearbyContract
+class GoogleGeoCoding implements GoogleGeoCodingContract
 {
     /** @var string */
-    private $apiUrl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/';
+    private $apiUrl = 'https://maps.googleapis.com/maps/api/geocode/';
 
     /** @var */
     private $apiKey;
 
     /**
-     * GoogleNearby constructor.
+     * GoogleGeoCode constructor.
      *
      * @param $apiKey
      * @param $output (json or xml)
@@ -37,30 +37,24 @@ class GoogleNearby implements GoogleNearbyContract
     }
 
     /**
-     * Get nearby locations.
+     * Convert address to latitude & longitude
      *
-     * API Docs: https://developers.google.com/places/web-service/search#PlaceSearchRequests
+     * API Docs: https://developers.google.com/maps/documentation/geocoding/intro
      *
-     * @param float $latitude
-     * @param float $longitude
-     * @param int   $radius
-     * @param int   $maxResults
-     * @param array $optionalParameters
+     * @param string $address
+     * @param array  $optionalParameters
      *
      * @return array
      */
-    public function getNearbyLocations(float $latitude, float $longitude, int $radius, int $maxResults = 20, array $optionalParameters = []): array
+    public function geoCodeAddress(string $address, array $optionalParameters = []): array
     {
-        // ToDo: Pagination implementation if $maxResults > 20 (issue with 'pagetoken' param | 2-3 seconds needed between requests!)
         $client = new Client();
-
 
         try {
             $response = $client->get($this->apiUrl, [
                 'query' => [
-                        'key'       => $this->getApiKey(),
-                        'location'  => $latitude . ',' . $longitude,
-                        'radius'    => $radius,
+                        'key'     => $this->getApiKey(),
+                        'address' => $address,
                     ] + $optionalParameters,
             ]);
 
